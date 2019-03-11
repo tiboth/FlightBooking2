@@ -51,6 +51,44 @@ namespace tasks.repository
             return null;
         }
         
+        public Employee login(string username, string password)
+        {
+            log.InfoFormat("Entering findOne with value {0}", username);
+            IDbConnection con = DBUtils.getConnection(props);
+
+            using (var comm = con.CreateCommand())
+            {
+                comm.CommandText = "select id,username, password from employees where username=@username and password=@password";
+                var paramUsername = comm.CreateParameter();
+                paramUsername.ParameterName = "@username";
+                paramUsername.Value = username;
+                comm.Parameters.Add(paramUsername);
+
+                var paramPassword = comm.CreateParameter();
+                paramPassword.ParameterName = "@password";
+                paramPassword.Value = password;
+                comm.Parameters.Add(paramPassword);
+
+                using (var dataR = comm.ExecuteReader())
+                {
+                    if (dataR.Read())
+                    {
+                        int idE = dataR.GetInt32(0);
+                        String usernameFound = dataR.GetString(1);
+                        String passwordFound = dataR.GetString(2);
+                        
+                        Employee employee = new Employee(idE, usernameFound, passwordFound);
+                        
+                        log.InfoFormat("Exiting findOne with value {0}", employee);
+                        Console.Write("login successful for " + usernameFound + "\n");
+                        return employee;
+                    }
+                }
+            }
+            log.InfoFormat("Exiting findOne with value {0}", null);
+            return null;
+        }
+        
         public IEnumerable<Employee> findAll()
         {
             IDbConnection con = DBUtils.getConnection(props);
@@ -99,6 +137,8 @@ namespace tasks.repository
                 if (result == 0)
                     throw new RepositoryException("No employee added !");
             }
+
+            Console.Write("saveee!!");;
         }
         
         public void update(int integer, Employee entity)

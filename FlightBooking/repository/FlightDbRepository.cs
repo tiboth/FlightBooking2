@@ -107,6 +107,7 @@ namespace tasks.repository
 						int places = dataR.GetInt32(5);
 						
 						Flight flight = new Flight(idF, departureDate, departureTime, airport, destination, places);
+						Console.Write("(findAllFlightsWithDestinationAndDate) zbor gasit cu id-ul:" + idF + "\n");
 						flightList.Add(flight);
 					}
 				}
@@ -147,6 +148,7 @@ namespace tasks.repository
 						int places = dataR.GetInt32(5);
 						
 						Flight flight = new Flight(idF, departureDate, departureTime, airport, destination, places);
+						Console.Write("(findAllFlightsWithDestinationAndDateAndTime) zbor gasit cu id-ul:" + idF + "\n");
 						flightList.Add(flight);
 					}
 				}
