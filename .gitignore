@@ -1,0 +1,6 @@
+.idea/
+packages/
+ConnectionUtils/bin/
+ConnectionUtils/obj/
+FlightBooking/obj/
+FlightBooking/bin/
